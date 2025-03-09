@@ -616,6 +616,17 @@ class QrPainter extends CustomPainter {
     final src = Alignment.center.inscribe(srcSize, Offset.zero & srcSize);
     final dst = Alignment.center.inscribe(size, position & size);
     canvas.drawImageRect(embeddedImage!, src, dst, paint);
+
+    if (style != null) {
+      if (style.borderRadius > 0) {
+        final strokePaint = Paint()
+          ..color = style.shapeColor ?? _qrDefaultColor
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = style.borderRadius;
+
+        canvas.drawRect(dst, strokePaint);
+      }
+    }
   }
 
   /// if [gradient] != null, then only black [_qrDefaultColor],
